@@ -74,9 +74,6 @@ export const updateProfile = (data = {}, id) => {
                 localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
                 dispatch(updateProfileAction(response));
             })
-            .catch(error => {
-                dispatch(updateProfileError(error.response.data));
-            });
     };
 };
 

@@ -7,7 +7,7 @@ var baseURL;
 // } else {
 //     baseURL = 'http://127.0.0.1:8000';
 // }
-baseURL = 'https://backend-seiart.herokuapp.com/';
+baseURL = 'http://127.0.0.1:8000/';
 const api = axios.create({
     baseURL: baseURL,
     headers: {
@@ -37,14 +37,17 @@ export default class API {
     /////////////////////////////
 
     getProfile = async () => {
-        return api.get('users/profile', {
-            requireToken: true
-        }).then(response => {
-            return response.data
-        }).catch(error => {
-            alert('error users/profile')
-        })
-    }
+        return api
+            .get('users/profile', {
+                requireToken: true
+            })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                alert('error users/profile');
+            });
+    };
 
     signUp = async (user_name, email, password) => {
         const savedPost = await api
@@ -156,9 +159,7 @@ export default class API {
     //////////////////////////////////////////
     getFavorites = async () => {
         const favorites = await api
-            .get('/favorites/', { 
-                requireToken: true 
-            })
+            .get('/favorites/', { requireToken: true })
             .then(response => {
                 return response.data;
             })

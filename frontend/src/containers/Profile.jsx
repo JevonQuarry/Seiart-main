@@ -11,7 +11,7 @@ function Profile() {
     const dispatch = useDispatch();
     const selector = useSelector(state => state);
     const user = getUsers(selector);
-    const userValues = { id: user.id, name: user.user_name, email: user.email, profile: user.profile };
+    const userValues = { name: user.user_name, email: user.email, profile: user.profile };
     const [values, setValues] = useState(userValues);
     const [image, setImage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -43,7 +43,8 @@ function Profile() {
 
     const updateProfileHandler = async () => {
         setIsLoading(true);
-        await dispatch(updateProfile({ ...values, profile: image }, values.id));
+        console.log('userId', user.id);
+        await dispatch(updateProfile({ ...values, profile: image }, user.id));
         setIsLoading(false);
     };
 

@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from .serializers import UserSerializer, UserSignUpSerializer, UserSignInSerializer, UserUpdateSerializer
 from .models import User
 from .mixins import CustomLoginRequiredMixin
+from rest_framework import status
+from rest_framework.renderers import JSONRenderer
 
 # Create your views here.
 
@@ -33,7 +35,7 @@ class UserUpdate(CustomLoginRequiredMixin, generics.UpdateAPIView):
 
     def update(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.kwargs['pk'])
-        if user.user.id != request.login_user.id:
+        if user.id != request.login_user.id:
             response = Response(
                 {'error': 'You can not update the userprofile not owned by you.'}, status=status.HTTP_404_NOT_FOUND)
             response.accepted_renderer = JSONRenderer()
