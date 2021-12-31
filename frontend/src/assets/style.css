@@ -584,3 +584,9 @@ img.commenticon {
 h3 {
     color: #fdfafa;
 }
+img.upload-area {
+    width: 150px;
+    height: 150px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 149px;
+}
