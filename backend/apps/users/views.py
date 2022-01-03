@@ -29,22 +29,22 @@ class UserCheckLogin(CustomLoginRequiredMixin, generics.RetrieveAPIView):
         return Response(serializer.data[0])
 
 
-class UserUpdate(CustomLoginRequiredMixin, generics.UpdateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# class UserUpdate(CustomLoginRequiredMixin, generics.UpdateAPIView):
+#     queryset = User.objects.all()
+#     serializer_class = UserSerializer
 
-    def update(self, request, *args, **kwargs):
-        user = User.objects.get(pk=self.kwargs['pk'])
-        if user.id != request.login_user.id:
-            response = Response(
-                {'error': 'You can not update the userprofile not owned by you.'}, status=status.HTTP_404_NOT_FOUND)
-            response.accepted_renderer = JSONRenderer()
-            response.accepted_media_type = "application/json"
-            response.renderer_context = {}
-            return response
-        user.save()
-        serializer = UserSerializer([user], many=True)
-        return Response(serializer.data[0])
+#     def update(self, request, *args, **kwargs):
+#         user = User.objects.get(pk=self.kwargs['pk'])
+#         if user.id != request.login_user.id:
+#             response = Response(
+#                 {'error': 'You can not update the userprofile not owned by you.'}, status=status.HTTP_404_NOT_FOUND)
+#             response.accepted_renderer = JSONRenderer()
+#             response.accepted_media_type = "application/json"
+#             response.renderer_context = {}
+#             return response
+#         user.save()
+#         serializer = UserSerializer([user], many=True)
+#         return Response(serializer.data[0])
 
 
 class UserList(CustomLoginRequiredMixin, generics.ListAPIView):

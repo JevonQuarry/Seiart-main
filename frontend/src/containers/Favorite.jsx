@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import Image1 from '../assets/img/image_1.jpg';
-import myFavorite from '../assets/icons/MyFavorite.png';
-import commentimg from '../assets/icons/Commenticon.png';
-import { getFavorites } from '../reducks/favourite/selectors';
-import { fetchFavorites } from '../reducks/favourite/operations';
 import { useDispatch, useSelector } from 'react-redux';
+
+import commentimg from '../assets/icons/Commenticon.png';
+import { fetchFavorites } from '../reducks/favourite/operations';
+import { getFavorites } from '../reducks/favourite/selectors';
 import { getPosts } from '../reducks/posts/selectors';
 
 function Favourite() {

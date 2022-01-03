@@ -18,23 +18,9 @@ class UserSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     profile = serializers.ImageField(required=False)
 
-    def validate(self, data):
-        errors = {}
-        if 'name' not in data or not data['name']:
-            errors['name'] = ['name is required.']
-
-        if 'email' not in data or not data['email']:
-            errors['email'] = ['email is required.']
-
-        if bool(errors):
-            raise serializers.ValidationError(errors)
-
-        return data
-
     class Meta:
         model = User
-        fields = ('id', 'name', 'password', 'profile',
-                  'email', 'token', 'token_expires')
+        fields = ('id', 'user_name', 'profile', 'email', 'token', 'token_expires_at')
 
 
 class UserSignUpSerializer(serializers.ModelSerializer):

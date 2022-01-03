@@ -67,14 +67,21 @@ export const signOut = () => {
 };
 
 export const updateProfile = (data = {}, id) => {
-    return async dispatch => {
-        return api
-            .updateProfile(data, id)
-            .then(response => {
-                localStorage.setItem(LOGIN_USER_KEY, JSON.stringify(response));
-                dispatch(updateProfileAction(response));
-            })
-    };
+	return async (dispatch) => {
+		return api
+			.updateProfile(data, id)
+			.then((response) => {
+				localStorage.setItem(
+					LOGIN_USER_KEY,
+					JSON.stringify(response)
+				);
+                console.log("response",response);
+				// dispatch(updateProfileAction(response));
+			})
+			.catch((error) => {
+				dispatch(updateProfileError(error.response.data));
+			});
+	};
 };
 
 export const getProfile = () => {

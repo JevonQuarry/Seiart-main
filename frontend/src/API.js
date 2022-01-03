@@ -97,7 +97,14 @@ export default class API {
         for (const key in updateProfileBody) {
             formData.append(key, updateProfileBody[key]);
         }
-        return api.put(`/users/update/${id}/`, formData, { requireToken: true });
+        return api
+            .put(`/users/update/${id}/`, formData, { requireToken: true })
+            .then(response => {
+                return response.data;
+            })
+            .catch(error => {
+                throw new Error(error);
+            });
     };
     //////////////////////////////
     // posts

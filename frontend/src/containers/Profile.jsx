@@ -1,23 +1,26 @@
-import React, { useRef, useState } from 'react';
-import userImg from '../assets/icons/User.png';
-
-import { updateProfile } from '../reducks/users/operations';
+import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { getPosts } from '../reducks/posts/selectors';
+import addImg from '../assets/icons/Add.png';
+import userImg from '../assets/icons/User.png';
+import image from '../assets/img/image_9.jpg';
+import { getProfile, updateProfile } from '../reducks/users/operations';
 import { getUsers } from '../reducks/users/selectors';
+
 function Profile() {
     const dispatch = useDispatch();
     const selector = useSelector(state => state);
     const user = getUsers(selector);
-    const userValues = { name: user.user_name };
-    const [values, setValues] = useState(userValues);
+
+    const initialValues = { user_name: '', email: '' };
+    const [values, setValues] = useState(initialValues);
+
     const [image, setImage] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const [previewImage, setPreviewImage] = useState(null);
-
     const inputFile = useRef(null);
+
     const onButtonClick = () => {
         console.log(inputFile);
         inputFile.current.click();
@@ -28,17 +31,24 @@ function Profile() {
         const objectUrl = URL.createObjectURL(file);
         setPreviewImage(objectUrl);
         setImage(file);
-        setValues({ ...values, profile: null });
     };
 
-  
+    const handleInputChange = e => {
+        const { name, value } = e.target;
+
+        setValues({
+            ...values,
+            [name]: value
+        });
+    };
 
     const updateProfileHandler = async () => {
         setIsLoading(true);
-        console.log('userId', user.id);
         await dispatch(updateProfile({ ...values, profile: image }, user.id));
         setIsLoading(false);
     };
+
+    console.log('image', image);
 
     return (
         <>
@@ -48,19 +58,48 @@ function Profile() {
                     <img
                         onClick={() => onButtonClick()}
                         name="image"
-                        src={previewImage ? previewImage : values.profile ? values.profile : userImg}
+                        src={previewImage ? previewImage : user.profile ? user.profile : userImg}
                         className={`upload-area`}
                         alt="Upload"
                     />
-                
+                    <div className="upload-text">{`${isLoading ? 'Updating Profile...' : 'Edit Profile'}`}</div>
+                    <label className="profile-input-label" htmlFor="name">
+                        Name
+                    </label>
+                    <input
+                        onChange={handleInputChange}
+                        type="text"
+                        value={values.user_name}
+                        name="user_name"
+                        className="profile-input"
+                        placeholder="Type your name"
+                    />
+                    <label className="profile-input-label" htmlFor="name">
+                        Mail Address
+                    </label>
+                    <input
+                        onChange={handleInputChange}
+                        type="email"
+                        value={values.email}
+                        name="email"
+                        className="profile-input"
+                        placeholder="Type your mail address"
+                    />
                     <button onClick={updateProfileHandler} type="button" className="custom-btn">
                         Done
                     </button>
                 </form>
 
-                
+                <h1 className="myprofile-name">UserName</h1>
             </div>
-           
+            <div className="feed">
+                <div className="new-post">
+                    <input className="newpost-icon" type="file" src={addImg} />
+                </div>
+                <div className="myart-body">
+                    <img className="myart-picture" src={image} alt="" />
+                </div>
+            </div>
         </>
     );
 }

@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.views import generic
 from rest_framework import generics
+from rest_framework.response import Response
 from apps.users.mixins import CustomLoginRequiredMixin
+from apps.users.models import User
 from .serializers import DetailPostSerializer, ListPostSerializer, PostSerializer
 from .models import Post
 
@@ -30,8 +32,17 @@ class PostAdd(CustomLoginRequiredMixin, generics.CreateAPIView):
     serializer_class = PostSerializer
 
     def post(self, request, *args, **kwargs):
-        request.data["user"] = request.login_user.id
-        return self.create(request, *args, **kwargs)
+
+        #Override create chat method to get depth response
+        new_post = Post.objects.create(
+            user=User.objects.get(id=request.login_user.id), 
+            image=request.data['image'],
+            body=request.data['name']
+        )
+        serializer = PostSerializer(new_post)
+
+        return Response(serializer.data)
+
 
 
 class PostDelete(generics.DestroyAPIView):

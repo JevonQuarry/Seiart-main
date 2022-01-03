@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { getPosts } from '../reducks/posts/selectors';
-import { fetchPosts } from '../reducks/posts/operations';
-import Favouritepic from '../assets/icons/Favorite.png';
-import Commentpic from '../assets/icons/Commenticon.png';
 import { push } from 'connected-react-router';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import commenticon from '../assets/icons/Commenticon.png';
+import Favouritepic from '../assets/icons/Favorite.png';
+import user1 from '../assets/profileimages/user_1.jpeg';
 import { addFavorites, fetchFavorites } from '../reducks/favourite/operations';
 import { getFavorites } from '../reducks/favourite/selectors';
-import user1 from '../assets/profileimages/user_1.jpeg';
-import commenticon from '../assets/icons/Commenticon.png';
-import { LOGIN_USER_KEY } from '../API';
+import { fetchPosts } from '../reducks/posts/operations';
+import { getPosts } from '../reducks/posts/selectors';
 
 const Home = () => {
     const selector = useSelector(state => state);
     const favorites = getFavorites(selector);
     const dispatch = useDispatch();
-    const user = JSON.parse(localStorage.getItem(LOGIN_USER_KEY));
 
     const posts = getPosts(selector);
-    console.log('FAVposts', favorites);
     useEffect(() => {
         dispatch(fetchPosts());
         dispatch(fetchFavorites());
+
+        // eslint-disable-next-line
     }, []);
 
     const clickPost = postId => {
@@ -35,7 +33,11 @@ const Home = () => {
                     posts.results.map(post => (
                         <div class="post-body">
                             <div class="post-header">
-                                <img class="profile-picture" src={user1} alt="profile picture" />
+                                <img
+                                    class="profile-picture"
+                                    src={post.user ? post.user.profile : ''}
+                                    alt="profile picture"
+                                />
                                 <h3 class="profile-name">
                                     {post.user ? post.user.user_name : ''}
                                     {console.log(post.user)}
