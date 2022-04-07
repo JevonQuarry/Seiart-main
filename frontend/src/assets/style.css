@@ -90,12 +90,7 @@ img.addpostbutton {
 }
 @media screen and (max-width: 500px) {
     .profile-picture {
-        width: 45px;
-        height: 75px;
-        object-fit: cover;
-        clip-path: circle();
-        top: 70px;
-        left: 14px;
+       display: none;
     }
 }
 .profile-picture1 {
@@ -465,16 +460,25 @@ input[value] {
 }
 
 @media screen and (max-width: 750px) {
-    .navhome,
+    /* .navhome,
     .navfav,
     .navuser,
     .search-container {
         display: none;
-    }
+    } */
+.topnav input[type='text'] {
 
-    .navbaroption {
-        float: right;
-        display: block;
+width: 146px;
+margin-top: 22px;
+height: 34px;
+
+}
+.navoption {
+    padding-top: 26px;
+}
+.navbaroption {
+    float: right;
+    display: block; 
     }
 }
 input.comment-input {

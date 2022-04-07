@@ -18,7 +18,7 @@ const Home = () => {
     const posts = getPosts(selector);
     useEffect(() => {
         dispatch(fetchPosts());
-        dispatch(fetchFavorites());
+        //dispatch(fetchFavorites());
 
         // eslint-disable-next-line
     }, []);
