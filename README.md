@@ -1,7 +1,8 @@
 # SeiArt
 
 ```
-SeiArt project, with a frontend built in React & Redux and a backend built in Django API.
+SeiArt project, with a frontend built in React & Redux and a backend built in Django API, 
+where we can post our picture and we can save our picture as well..
 ```
 
 ## Live Demo
